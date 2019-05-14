@@ -5,7 +5,7 @@ export default class SideBar extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hello World</Text>
+        <Text>Sidebar Items Here...</Text>
       </View>
     );
   }
