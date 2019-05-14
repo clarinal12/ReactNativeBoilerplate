@@ -56,7 +56,7 @@ export default class Signup extends React.Component {
             <Right />
           </Header>
           <Content padder contentContainerStyle={styles.content}>
-            {/* <Mutation
+            <Mutation
               mutation={SIGN_UP}
               onCompleted={data => this.handleSignupSuccess(data)}
               onError={error => this.handleSignupError(error)}
@@ -68,7 +68,7 @@ export default class Signup extends React.Component {
                   onSubmit={register}
                 />
               )}
-            </Mutation> */}
+            </Mutation>
           </Content>
         </Container>
       </StyleProvider>

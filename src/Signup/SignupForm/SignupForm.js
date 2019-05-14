@@ -27,10 +27,6 @@ const SignupForm = props => {
     loading
   } = props;
 
-  console.log("props", props);
-  console.log("errors", errors);
-  console.log("touched", touched);
-
   const nameError = errors.name && touched.name;
   const emailError = errors.email && touched.email;
   const passwordError = errors.password && touched.password;
@@ -110,14 +106,7 @@ const SignupForm = props => {
         style={styles.loginButton}
         disabled={loading}
       >
-        {loading ? (
-          <>
-            <Spinner />
-            <Text>Signing up...</Text>
-          </>
-        ) : (
-          <Text>Sign Up</Text>
-        )}
+        {loading ? <Spinner /> : <Text>Sign Up</Text>}
       </Button>
       <Text style={{ alignSelf: "center", marginTop: 40 }}>Or</Text>
       <Button transparent style={{ alignSelf: "center", marginTop: 20 }}>

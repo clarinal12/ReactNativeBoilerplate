@@ -1,29 +1,24 @@
 import React, { Component } from "React";
 import { Link } from "react-router-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import CoreLayout from "../components/CoreLayout";
 import { Text, Button, Form, Item, Label, Input } from "native-base";
 
 class Profile extends Component {
-  render() {
+  logout = async () => {
     const { history } = this.props;
+    await AsyncStorage.clear();
+    history.push("/login");
+  };
 
+  render() {
     return (
       <CoreLayout>
         <Text>This is Content Section for Profile</Text>
-        <Form>
-          <Item floatingLabel>
-            <Label>Username</Label>
-            <Input />
-          </Item>
-          <Item floatingLabel last>
-            <Label>Password</Label>
-            <Input />
-          </Item>
-          <Button primary>
-            <Text>Hello Idiots</Text>
-          </Button>
-        </Form>
+        <Button primary style={{ marginTop: 20 }} onPress={this.logout}>
+          <Text>Logout</Text>
+        </Button>
       </CoreLayout>
     );
   }

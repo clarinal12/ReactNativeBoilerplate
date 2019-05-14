@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import {
   Container,
@@ -13,40 +14,76 @@ import {
   Body,
   Icon,
   Text,
-  StyleProvider
+  StyleProvider,
+  Drawer
 } from "native-base";
+import SideBar from "./SideBar";
 import getTheme from "../../native-base-theme/components";
 import platform from "../../native-base-theme/variables/platform";
+import material from "../../native-base-theme/variables/material";
 
-const CoreLayout = props => {
-  const { title } = props;
-  return (
-    <StyleProvider style={getTheme(platform)}>
-      <Container>
-        <Header>
-          <Left>
-            <Button primary transparent>
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>{title || "Title"}</Title>
-          </Body>
-          <Right>
-            <Text>Right Text</Text>
-          </Right>
-        </Header>
-        <Content padder>{props.children}</Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
-    </StyleProvider>
-  );
-};
+class CoreLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDrawer: false
+    };
+  }
+
+  toggleDrawer = () => {
+    const { isDrawer } = this.state;
+    this.setState({
+      isDrawer: !isDrawer
+    });
+  };
+
+  closeDrawer = () => {
+    this.drawer._root.close();
+  };
+
+  openDrawer = () => {
+    this.drawer._root.open();
+  };
+
+  render() {
+    const { title } = this.props;
+    const { isDrawer } = this.state;
+
+    return (
+      <StyleProvider style={getTheme(platform)}>
+        <Drawer
+          ref={ref => {
+            this.drawer = ref;
+          }}
+          content={<SideBar navigator={this.navigator} />}
+        >
+          <Container>
+            <Header>
+              <Left>
+                <Button onPress={() => this.openDrawer()} primary transparent>
+                  <Icon name="menu" />
+                </Button>
+              </Left>
+              <Body>
+                <Title>{title || "Title"}</Title>
+              </Body>
+              <Right>
+                <Text>Right Head</Text>
+              </Right>
+            </Header>
+            <Content padder>{this.props.children}</Content>
+            <Footer>
+              <FooterTab>
+                <Button full>
+                  <Text>Footer</Text>
+                </Button>
+              </FooterTab>
+            </Footer>
+          </Container>
+        </Drawer>
+      </StyleProvider>
+    );
+  }
+}
 
 export default CoreLayout;

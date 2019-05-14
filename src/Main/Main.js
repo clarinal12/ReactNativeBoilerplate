@@ -1,30 +1,37 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import About from "../About";
 import Profile from "../Profile";
 
 const pages = [
-  <Redirect key={1} from="/" exact to="/profile" />,
-  <Route key={2} path="/profile" component={Profile} />,
-  <Route key={3} path="/about" component={About} />
-  // { path: "/about", component: About },
-  // { path: "/profile", component: Profile }
+  { path: "/about", component: About },
+  { path: "/profile", component: Profile }
 ];
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: "" };
+    this.state = { text: "", auth: false };
   }
+
+  async componentWillMount() {
+    const { history } = this.props;
+    const token = await AsyncStorage.getItem("accessToken");
+    if (!token) history.push("/login");
+    else this.setState({ auth: true });
+  }
+
   render() {
+    const { auth } = this.state;
+    if (!auth) return null;
     return (
       <Switch>
-        {/* <Redirect from="/" exact to="/profile" />,
+        <Redirect from="/" exact to="/profile" />,
         {pages.map((page, key) => (
           <Route key={key} path={page.path} component={page.component} />
-        ))} */}
-        {pages}
+        ))}
       </Switch>
     );
   }

@@ -49,7 +49,7 @@ const LoginForm = props => {
           <ErrorMessage name="email" />
         </InputFeedback>
       )}
-      <Item floatingLabel last>
+      <Item floatingLabel error={passwordError} last>
         <Label>Password</Label>
         <Input
           secureTextEntry={true}
@@ -71,14 +71,7 @@ const LoginForm = props => {
         style={styles.loginButton}
         disabled={loading}
       >
-        {loading ? (
-          <>
-            <Spinner />
-            <Text>Logging in...</Text>
-          </>
-        ) : (
-          <Text>Login</Text>
-        )}
+        {loading ? <Spinner /> : <Text>Login</Text>}
       </Button>
       <Text style={{ alignSelf: "center", marginTop: 40 }}>Or</Text>
       <Button transparent style={{ alignSelf: "center", marginTop: 20 }}>

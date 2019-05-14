@@ -28,13 +28,19 @@ export default class Login extends React.Component {
   }
 
   handleLoginSuccess = async data => {
-    console.log("token", data.login, this.props);
+    const { history } = this.props;
     await AsyncStorage.setItem("accessToken", data.login);
-    this.props.history.push("/profile");
-    console.log("complete");
+    history.push("/");
   };
 
-  handleLoginError = error => {};
+  handleLoginError = error => {
+    Toast.show({
+      text: error.message,
+      buttonText: "Okay",
+      position: "bottom",
+      duration: 3000
+    });
+  };
 
   render() {
     return (
@@ -48,7 +54,7 @@ export default class Login extends React.Component {
             <Right />
           </Header>
           <Content padder contentContainerStyle={styles.content}>
-            {/* <Mutation
+            <Mutation
               mutation={LOGIN}
               onCompleted={data => this.handleLoginSuccess(data)}
               onError={error => this.handleLoginError(error)}
@@ -56,7 +62,7 @@ export default class Login extends React.Component {
               {(login, { loading, error }) => (
                 <LoginForm loading={loading} error={error} onSubmit={login} />
               )}
-            </Mutation> */}
+            </Mutation>
           </Content>
         </Container>
       </StyleProvider>
