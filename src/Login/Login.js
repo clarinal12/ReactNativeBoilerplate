@@ -9,14 +9,14 @@ import {
   Title,
   Body,
   Content,
-  StyleProvider,
-  Toast
+  StyleProvider
 } from "native-base";
+import { Alert } from "react-native";
 import getTheme from "../../native-base-theme/components";
 import platform from "../../native-base-theme/variables/platform";
 import styles from "./styles";
 
-import LoginForm from "./LoginForm";
+import LoginForm from "./components/LoginForm";
 
 import { Mutation } from "react-apollo";
 import { LOGIN } from "./mutations";
@@ -34,12 +34,12 @@ export default class Login extends React.Component {
   };
 
   handleLoginError = error => {
-    Toast.show({
-      text: error.message,
-      buttonText: "Okay",
-      position: "bottom",
-      duration: 3000
-    });
+    Alert.alert(
+      "Login Failed",
+      error.message,
+      [{ text: "OK", onPress: () => {} }],
+      { cancelable: false }
+    );
   };
 
   render() {

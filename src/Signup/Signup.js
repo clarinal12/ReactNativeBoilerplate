@@ -8,14 +8,15 @@ import {
   Title,
   Body,
   Content,
-  StyleProvider,
-  Toast
+  StyleProvider
 } from "native-base";
+import { Alert } from "react-native";
+
 import getTheme from "../../native-base-theme/components";
 import platform from "../../native-base-theme/variables/platform";
 import styles from "./styles";
 
-import SignupForm from "./SignupForm";
+import SignupForm from "./components/SignupForm";
 
 import { Mutation } from "react-apollo";
 import { SIGN_UP } from "./mutations";
@@ -27,21 +28,22 @@ export default class Signup extends React.Component {
   }
 
   handleSignupSuccess = data => {
-    Toast.show({
-      text: "Sign up success! Go to our login page to login",
-      buttonText: "Okay",
-      position: "bottom",
-      duration: 3000
-    });
+    const { history } = this.props;
+    Alert.alert(
+      "Registration Successful",
+      "You can now login using your account",
+      [{ text: "OK", onPress: () => history.push("/login") }],
+      { cancelable: false }
+    );
   };
 
   handleSignupError = error => {
-    Toast.show({
-      text: error.message,
-      buttonText: "Okay",
-      position: "bottom",
-      duration: 3000
-    });
+    Alert.alert(
+      "Registration Failed",
+      error.message,
+      [{ text: "OK", onPress: () => {} }],
+      { cancelable: false }
+    );
   };
 
   render() {

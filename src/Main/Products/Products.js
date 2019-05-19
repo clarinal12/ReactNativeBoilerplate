@@ -2,7 +2,7 @@ import React, { Component } from "React";
 import { Link } from "react-router-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import CoreLayout from "../components/CoreLayout";
+import CoreLayout from "../../components/CoreLayout/CoreLayout";
 import { Text, Button, Form, Item, Label, Input } from "native-base";
 
 class Profile extends Component {
@@ -15,7 +15,7 @@ class Profile extends Component {
   render() {
     return (
       <CoreLayout>
-        <Text>This is Content Section for Profile</Text>
+        <Text>This is Content Section for Product</Text>
         <Button primary style={{ marginTop: 20 }} onPress={this.logout}>
           <Text>Logout</Text>
         </Button>

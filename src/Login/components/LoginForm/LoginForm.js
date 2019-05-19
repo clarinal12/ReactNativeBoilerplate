@@ -12,9 +12,9 @@ import {
   Icon,
   Spinner
 } from "native-base";
-import styles from "../styles";
+import styles from "../../styles";
 import validationSchema from "./validationSchema";
-import InputFeedback from "../../components/InputFeedback";
+import InputFeedback from "ReactNativeBoilerplate/src/components/InputFeedback";
 
 const LoginForm = props => {
   const {

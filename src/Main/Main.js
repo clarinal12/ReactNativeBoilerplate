@@ -2,10 +2,12 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import About from "../About";
-import Profile from "../Profile";
+import About from "./About";
+import Profile from "./Profile";
+import Products from "./Products";
 
 const pages = [
+  { path: "/Products", component: Products },
   { path: "/about", component: About },
   { path: "/profile", component: Profile }
 ];
@@ -28,7 +30,7 @@ export default class Main extends React.Component {
     if (!auth) return null;
     return (
       <Switch>
-        <Redirect from="/" exact to="/profile" />,
+        <Redirect from="/" exact to="/products" />,
         {pages.map((page, key) => (
           <Route key={key} path={page.path} component={page.component} />
         ))}

@@ -17,10 +17,10 @@ import {
   StyleProvider,
   Drawer
 } from "native-base";
-import SideBar from "./SideBar";
-import getTheme from "../../native-base-theme/components";
-import platform from "../../native-base-theme/variables/platform";
-import material from "../../native-base-theme/variables/material";
+import SideBar from "../SideBar";
+import getTheme from "../../../native-base-theme/components";
+import platform from "../../../native-base-theme/variables/platform";
+import material from "../../../native-base-theme/variables/material";
 
 class CoreLayout extends Component {
   constructor(props) {
