@@ -26,6 +26,7 @@ export default (variables /*: * */ = variable) => {
       flexDirection: null,
       backgroundColor: "transparent",
       borderColor: null,
+      borderRadius: 0,
       elevation: 0,
       shadowColor: null,
       shadowOffset: null,
@@ -66,9 +67,8 @@ export default (variables /*: * */ = variable) => {
         lineHeight: 16
       }
     },
-    backgroundColor: Platform.OS === "android"
-      ? variables.footerDefaultBg
-      : undefined,
+    backgroundColor:
+      Platform.OS === "android" ? variables.footerDefaultBg : undefined,
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,

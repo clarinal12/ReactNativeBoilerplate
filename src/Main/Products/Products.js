@@ -1,24 +1,78 @@
 import React, { Component } from "React";
-import { Link } from "react-router-native";
-import AsyncStorage from "@react-native-community/async-storage";
 
 import CoreLayout from "../../components/CoreLayout/CoreLayout";
-import { Text, Button, Form, Item, Label, Input } from "native-base";
+import { ScrollView } from "react-native";
+import { Text, Card, CardItem, Body } from "native-base";
+// import { Col, Row, Grid } from "react-native-easy-grid";
+import styles from "./styles";
+
+const buttons = [
+  {
+    label: "Apps"
+  },
+  {
+    label: "Camera"
+  },
+  {
+    label: "Button"
+  },
+  {
+    label: "Contact"
+  }
+];
 
 class Profile extends Component {
-  logout = async () => {
-    const { history } = this.props;
-    await AsyncStorage.clear();
-    history.push("/login");
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: "true"
+    };
+  }
 
   render() {
     return (
-      <CoreLayout>
-        <Text>This is Content Section for Product</Text>
-        <Button primary style={{ marginTop: 20 }} onPress={this.logout}>
-          <Text>Logout</Text>
-        </Button>
+      <CoreLayout
+        title="Products"
+        footer={true}
+        footerButtons={buttons}
+        style={styles.content}
+      >
+        <ScrollView>
+          <Card>
+            <CardItem header bordered>
+              <Text>NativeBase</Text>
+            </CardItem>
+            <CardItem bordered>
+              <Body>
+                <Text>
+                  NativeBase is a free and open source framework that enable
+                  developers to build high-quality mobile apps using React
+                  Native iOS and Android apps with a fusion of ES6.
+                </Text>
+              </Body>
+            </CardItem>
+            <CardItem footer bordered>
+              <Text>GeekyAnts</Text>
+            </CardItem>
+          </Card>
+          <Card>
+            <CardItem header bordered>
+              <Text>NativeBase</Text>
+            </CardItem>
+            <CardItem bordered>
+              <Body>
+                <Text>
+                  NativeBase is a free and open source framework that enable
+                  developers to build high-quality mobile apps using React
+                  Native iOS and Android apps with a fusion of ES6.
+                </Text>
+              </Body>
+            </CardItem>
+            <CardItem footer bordered>
+              <Text>GeekyAnts</Text>
+            </CardItem>
+          </Card>
+        </ScrollView>
       </CoreLayout>
     );
   }

@@ -20,22 +20,12 @@ import {
 import SideBar from "../SideBar";
 import getTheme from "../../../native-base-theme/components";
 import platform from "../../../native-base-theme/variables/platform";
-import material from "../../../native-base-theme/variables/material";
 
 class CoreLayout extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isDrawer: false
-    };
+    this.state = {};
   }
-
-  toggleDrawer = () => {
-    const { isDrawer } = this.state;
-    this.setState({
-      isDrawer: !isDrawer
-    });
-  };
 
   closeDrawer = () => {
     this.drawer._root.close();
@@ -46,7 +36,7 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { title } = this.props;
+    const { title, style, footer, footerButtons } = this.props;
     const { isDrawer } = this.state;
 
     return (
@@ -67,23 +57,37 @@ class CoreLayout extends Component {
               <Body>
                 <Title>{title || "Title"}</Title>
               </Body>
-              <Right>
-                <Text>Right Head</Text>
-              </Right>
+              <Right>{/* <Text>Right Head</Text> */}</Right>
             </Header>
-            <Content padder>{this.props.children}</Content>
-            <Footer>
-              <FooterTab>
-                <Button full>
-                  <Text>Footer</Text>
-                </Button>
-              </FooterTab>
-            </Footer>
+            <Content padder contentContainerStyle={style || {}}>
+              {this.props.children}
+            </Content>
+            {footer && (
+              <Footer>
+                <FooterTab>
+                  {footerButtons.map(button => (
+                    <Button active={button.label === "Camera"}>
+                      <Text>{button.label}</Text>
+                    </Button>
+                  ))}
+                </FooterTab>
+              </Footer>
+            )}
           </Container>
         </Drawer>
       </StyleProvider>
     );
   }
 }
+
+CoreLayout.propTypes = {
+  footerButtons: PropTypes.arrayOf(PropTypes.shape({})),
+  footer: PropTypes.bool
+};
+
+CoreLayout.defaultProps = {
+  footerButtons: [],
+  footer: PropTypes.bool
+};
 
 export default CoreLayout;
