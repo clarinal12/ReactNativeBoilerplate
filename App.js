@@ -13,8 +13,6 @@ import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
-import { Root } from "native-base";
-
 const httpLink = createHttpLink({
   uri: "http://localhost:4000"
 });
@@ -39,17 +37,15 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <Root>
-          <NativeRouter>
-            <BackButton>
-              <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/" component={Main} />
-              </Switch>
-            </BackButton>
-          </NativeRouter>
-        </Root>
+        <NativeRouter>
+          <BackButton>
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/" component={Main} />
+            </Switch>
+          </BackButton>
+        </NativeRouter>
       </ApolloProvider>
     );
   }

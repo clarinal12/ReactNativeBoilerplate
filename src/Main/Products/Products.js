@@ -2,9 +2,10 @@ import React, { Component } from "React";
 
 import CoreLayout from "../../components/CoreLayout/CoreLayout";
 import { ScrollView } from "react-native";
-import { Text, Card, CardItem, Body } from "native-base";
-// import { Col, Row, Grid } from "react-native-easy-grid";
 import styles from "./styles";
+import { Query } from "react-apollo";
+import { PRODUCTS } from "./queries";
+import AllProducts from "./AllProducts";
 
 const buttons = [
   {
@@ -38,40 +39,11 @@ class Profile extends Component {
         style={styles.content}
       >
         <ScrollView>
-          <Card>
-            <CardItem header bordered>
-              <Text>NativeBase</Text>
-            </CardItem>
-            <CardItem bordered>
-              <Body>
-                <Text>
-                  NativeBase is a free and open source framework that enable
-                  developers to build high-quality mobile apps using React
-                  Native iOS and Android apps with a fusion of ES6.
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem footer bordered>
-              <Text>GeekyAnts</Text>
-            </CardItem>
-          </Card>
-          <Card>
-            <CardItem header bordered>
-              <Text>NativeBase</Text>
-            </CardItem>
-            <CardItem bordered>
-              <Body>
-                <Text>
-                  NativeBase is a free and open source framework that enable
-                  developers to build high-quality mobile apps using React
-                  Native iOS and Android apps with a fusion of ES6.
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem footer bordered>
-              <Text>GeekyAnts</Text>
-            </CardItem>
-          </Card>
+          <Query query={PRODUCTS}>
+            {response => {
+              return <AllProducts {...response} />;
+            }}
+          </Query>
         </ScrollView>
       </CoreLayout>
     );

@@ -65,8 +65,8 @@ class CoreLayout extends Component {
             {footer && (
               <Footer>
                 <FooterTab>
-                  {footerButtons.map(button => (
-                    <Button active={button.label === "Camera"}>
+                  {footerButtons.map((button, index) => (
+                    <Button key={index} active={button.label === "Camera"}>
                       <Text>{button.label}</Text>
                     </Button>
                   ))}
