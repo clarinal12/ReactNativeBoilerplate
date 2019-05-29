@@ -66,7 +66,11 @@ class CoreLayout extends Component {
               <Footer>
                 <FooterTab>
                   {footerButtons.map((button, index) => (
-                    <Button key={index} active={button.label === "Camera"}>
+                    <Button
+                      key={index}
+                      active={button.active}
+                      onPress={() => button.action(index)}
+                    >
                       <Text>{button.label}</Text>
                     </Button>
                   ))}
@@ -87,7 +91,7 @@ CoreLayout.propTypes = {
 
 CoreLayout.defaultProps = {
   footerButtons: [],
-  footer: PropTypes.bool
+  footer: false
 };
 
 export default CoreLayout;
