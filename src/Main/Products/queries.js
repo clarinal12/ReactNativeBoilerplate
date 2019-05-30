@@ -12,4 +12,26 @@ export const PRODUCTS = gql`
   }
 `;
 
+export const NEW_PRODUCT = gql`
+  mutation CreateProduct(
+    $name: String!
+    $description: String!
+    $quantity: Float!
+    $price: Float!
+  ) {
+    createProduct(
+      name: $name
+      description: $description
+      quantity: $quantity
+      price: $price
+    ) {
+      id
+      name
+      description
+      quantity
+      price
+    }
+  }
+`;
+
 export default {};

@@ -1,5 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-native";
+import PropTypes from "prop-types";
 
 import { withFormik, ErrorMessage } from "formik";
 import {
@@ -12,45 +12,141 @@ import {
   Icon,
   Spinner
 } from "native-base";
-// import styles from "../../styles";
-// import validationSchema from "./validationSchema";
+
 import InputFeedback from "ReactNativeBoilerplate/src/components/InputFeedback";
+
+import validationSchema from "./validationSchema";
 
 const ProductForm = props => {
   const {
     values,
     errors,
     touched,
-    handleSubmit,
     handleBlur,
     handleChange,
+    handleSubmit,
     loading
   } = props;
 
-  const emailError = errors.email && touched.email;
-  const passwordError = errors.password && touched.password;
+  const nameError = errors.name && touched.name;
+  const descriptionError = errors.description && touched.description;
+  const quantityError = errors.quantity && touched.quantity;
+  const priceError = errors.price && touched.price;
 
   return (
     <Form>
-      <Text>Product Form</Text>
+      <Item floatingLabel error={nameError}>
+        <Label>Name</Label>
+        <Input
+          autoCorrect={false}
+          onChangeText={handleChange("name")}
+          onBlur={handleBlur("name")}
+          value={values.name}
+        />
+        {nameError && <Icon name="close-circle" />}
+      </Item>
+      {nameError && (
+        <InputFeedback type="error">
+          <ErrorMessage name="name" />
+        </InputFeedback>
+      )}
+      <Item floatingLabel error={descriptionError}>
+        <Label>Description</Label>
+        <Input
+          autoCorrect={false}
+          onChangeText={handleChange("description")}
+          onBlur={handleBlur("description")}
+          value={values.description}
+        />
+        {descriptionError && <Icon name="close-circle" />}
+      </Item>
+      {descriptionError && (
+        <InputFeedback type="error">
+          <ErrorMessage name="description" />
+        </InputFeedback>
+      )}
+      <Item floatingLabel error={quantityError}>
+        <Label>Quantity</Label>
+        <Input
+          onChangeText={handleChange("quantity")}
+          onBlur={handleBlur("quantity")}
+          value={values.quantity}
+          keyboardType="numeric"
+        />
+        {quantityError && <Icon name="close-circle" />}
+      </Item>
+      {quantityError && (
+        <InputFeedback type="error">
+          <ErrorMessage name="quantity" />
+        </InputFeedback>
+      )}
+      <Item floatingLabel last error={priceError}>
+        <Label>Price</Label>
+        <Input
+          onChangeText={handleChange("price")}
+          onBlur={handleBlur("price")}
+          value={values.price}
+          keyboardType="numeric"
+        />
+        {priceError && <Icon name="close-circle" />}
+      </Item>
+      {priceError && (
+        <InputFeedback type="error">
+          <ErrorMessage name="price" />
+        </InputFeedback>
+      )}
+      <Button
+        onPress={handleSubmit}
+        primary
+        full
+        disabled={loading}
+        style={{ marginTop: 20 }}
+      >
+        {loading ? <Spinner /> : <Text>Create</Text>}
+      </Button>
     </Form>
   );
 };
 
-ProductForm.propTypes = {};
+ProductForm.propTypes = {
+  values: PropTypes.shape({}),
+  errors: PropTypes.shape({}),
+  touched: PropTypes.shape({}),
+  handleBlur: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  loading: PropTypes.bool
+};
 
-ProductForm.defaultProps = {};
+ProductForm.defaultProps = {
+  values: {},
+  errors: {},
+  touched: {},
+  handleBlur: e => e,
+  handleChange: e => e,
+  handleSubmit: e => e,
+  loading: false
+};
 
 export default withFormik({
   mapPropsToValues: props => ({
-    // email: "",
-    // password: "",
-    // login: props.onSubmit
+    name: "",
+    description: "",
+    quantity: "",
+    price: "",
+    create: props.onSubmit
   }),
   handleSubmit: async (values, { resetForm }) => {
-    // const { login, email, password } = values;
-    // const response = await login({ variables: { email, password } });
-    // if (response) resetForm();
-  }
-  // validationSchema: validationSchema
+    const { create, name, description, quantity, price } = values;
+    const response = await create({
+      variables: {
+        name,
+        description,
+        quantity: Number(quantity),
+        price: Number(price)
+      }
+    });
+    if (response) resetForm();
+  },
+  validationSchema
 })(ProductForm);

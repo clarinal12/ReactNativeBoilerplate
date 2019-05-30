@@ -62,7 +62,7 @@ class CoreLayout extends Component {
             <Content padder contentContainerStyle={style || {}}>
               {this.props.children}
             </Content>
-            {footer && (
+            {/* {footer && (
               <Footer>
                 <FooterTab>
                   {footerButtons.map((button, index) => (
@@ -76,7 +76,7 @@ class CoreLayout extends Component {
                   ))}
                 </FooterTab>
               </Footer>
-            )}
+            )} */}
           </Container>
         </Drawer>
       </StyleProvider>
