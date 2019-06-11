@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { NativeRouter, Route, Switch, BackButton } from "react-router-native";
 import AsyncStorage from "@react-native-community/async-storage";
+import { Platform } from "react-native";
 
-import requireAuth from "./src/utils/requireAuth";
+// import requireAuth from "./src/utils/requireAuth";
 import Login from "./src/Login";
 import Signup from "./src/Signup";
 import Main from "./src/Main";
@@ -14,7 +15,7 @@ import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000"
+  uri: Platform.OS === "ios" ? "http://localhost:4000" : "http://10.0.2.2:4000"
 });
 
 const authLink = setContext(async (_, { headers }) => {

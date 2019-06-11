@@ -70,7 +70,7 @@ const ProductForm = props => {
         <Input
           onChangeText={handleChange("quantity")}
           onBlur={handleBlur("quantity")}
-          value={values.quantity}
+          value={String(values.quantity)}
           keyboardType="numeric"
         />
         {quantityError && <Icon name="close-circle" />}
@@ -85,7 +85,7 @@ const ProductForm = props => {
         <Input
           onChangeText={handleChange("price")}
           onBlur={handleBlur("price")}
-          value={values.price}
+          value={String(values.price)}
           keyboardType="numeric"
         />
         {priceError && <Icon name="close-circle" />}
@@ -102,7 +102,7 @@ const ProductForm = props => {
         disabled={loading}
         style={{ marginTop: 20 }}
       >
-        {loading ? <Spinner /> : <Text>Create</Text>}
+        {loading ? <Spinner /> : <Text>{values.id ? "Edit" : "Create"}</Text>}
       </Button>
     </Form>
   );
@@ -115,7 +115,8 @@ ProductForm.propTypes = {
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  product: PropTypes.shape({})
 };
 
 ProductForm.defaultProps = {
@@ -125,28 +126,53 @@ ProductForm.defaultProps = {
   handleBlur: e => e,
   handleChange: e => e,
   handleSubmit: e => e,
-  loading: false
+  loading: false,
+  product: {}
 };
 
 export default withFormik({
-  mapPropsToValues: props => ({
-    name: "",
-    description: "",
-    quantity: "",
-    price: "",
-    create: props.onSubmit
-  }),
+  mapPropsToValues: props => {
+    const { product } = props;
+
+    if (product) {
+      return {
+        ...product,
+        mutation: props.onSubmit
+      };
+    } else {
+      return {
+        id: "",
+        name: "",
+        description: "",
+        quantity: "",
+        price: "",
+        mutation: props.onSubmit
+      };
+    }
+  },
   handleSubmit: async (values, { resetForm }) => {
-    const { create, name, description, quantity, price } = values;
-    const response = await create({
-      variables: {
+    const { mutation, name, description, quantity, price, id } = values;
+    let variables = {};
+    if (id) {
+      variables = {
+        id,
+        input: {
+          name,
+          description,
+          quantity: Number(quantity),
+          price: Number(price)
+        }
+      };
+    } else {
+      variables = {
         name,
         description,
         quantity: Number(quantity),
         price: Number(price)
-      }
-    });
-    if (response) resetForm();
+      };
+    }
+    const response = await mutation({ variables });
+    if (response && !id) resetForm();
   },
   validationSchema
 })(ProductForm);

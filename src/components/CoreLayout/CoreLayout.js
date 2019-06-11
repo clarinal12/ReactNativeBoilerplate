@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import { withRouter } from "react-router-native";
 import {
   Container,
   Header,
   Title,
   Content,
-  Footer,
-  FooterTab,
   Button,
   Left,
   Right,
@@ -18,8 +17,10 @@ import {
   Drawer
 } from "native-base";
 import SideBar from "../SideBar";
-import getTheme from "../../../native-base-theme/components";
-import platform from "../../../native-base-theme/variables/platform";
+import getTheme from "ReactNativeBoilerplate/native-base-theme/components";
+import platform from "ReactNativeBoilerplate/native-base-theme/variables/platform";
+import material from "ReactNativeBoilerplate/native-base-theme/variables/material";
+import commonColor from "ReactNativeBoilerplate/native-base-theme/variables/commonColor";
 
 class CoreLayout extends Component {
   constructor(props) {
@@ -36,8 +37,7 @@ class CoreLayout extends Component {
   };
 
   render() {
-    const { title, style, footer, footerButtons } = this.props;
-    const { isDrawer } = this.state;
+    const { title, style, history } = this.props;
 
     return (
       <StyleProvider style={getTheme(platform)}>
@@ -50,33 +50,24 @@ class CoreLayout extends Component {
           <Container>
             <Header>
               <Left>
-                <Button onPress={() => this.openDrawer()} primary transparent>
+                <Button onPress={() => this.openDrawer()} transparent>
                   <Icon name="menu" />
                 </Button>
               </Left>
               <Body>
                 <Title>{title || "Title"}</Title>
               </Body>
-              <Right>{/* <Text>Right Head</Text> */}</Right>
+              <Right>
+                {history.index !== 0 && (
+                  <Button transparent onPress={() => history.goBack()}>
+                    <Text>Back</Text>
+                  </Button>
+                )}
+              </Right>
             </Header>
             <Content padder contentContainerStyle={style || {}}>
               {this.props.children}
             </Content>
-            {/* {footer && (
-              <Footer>
-                <FooterTab>
-                  {footerButtons.map((button, index) => (
-                    <Button
-                      key={index}
-                      active={button.active}
-                      onPress={() => button.action(index)}
-                    >
-                      <Text>{button.label}</Text>
-                    </Button>
-                  ))}
-                </FooterTab>
-              </Footer>
-            )} */}
           </Container>
         </Drawer>
       </StyleProvider>
@@ -84,14 +75,8 @@ class CoreLayout extends Component {
   }
 }
 
-CoreLayout.propTypes = {
-  footerButtons: PropTypes.arrayOf(PropTypes.shape({})),
-  footer: PropTypes.bool
-};
+CoreLayout.propTypes = {};
 
-CoreLayout.defaultProps = {
-  footerButtons: [],
-  footer: false
-};
+CoreLayout.defaultProps = {};
 
-export default CoreLayout;
+export default withRouter(CoreLayout);
