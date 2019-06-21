@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "353717842899",
+    "firebase_url": "https://turnkey-rookery-243913.firebaseio.com",
+    "project_id": "turnkey-rookery-243913",
+    "storage_bucket": "turnkey-rookery-243913.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353717842899:android:fd8ea337490fbb88",
+        "android_client_info": {
+          "package_name": "com.reactnativeboilerplate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIgC4lhcOAe3EBCPjMG9dzxsTxVs4DUMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
